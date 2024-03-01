@@ -152,16 +152,6 @@ def pregunta_04():
     return resultado
 
 
-resultado_pregunta_01 = pregunta_01()
-print(resultado_pregunta_01)
-resultado_pregunta_02 = pregunta_02()
-print(resultado_pregunta_02)
-resultado_pregunta_03 = pregunta_03()
-print(resultado_pregunta_03)
-resultado_pregunta_04 = pregunta_04()
-print(resultado_pregunta_04)
-
-
 
 
 def pregunta_05():
