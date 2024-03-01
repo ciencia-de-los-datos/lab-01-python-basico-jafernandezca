@@ -21,7 +21,18 @@ def pregunta_01():
     214
 
     """
-    return
+    suma_segunda_columna = 0
+    with open('data.csv', 'r') as archivo:
+        for linea in archivo:
+            # Dividir la línea en columnas utilizando la tabulación como separador
+            columnas = linea.strip().split('\t')
+            
+            # Sumar el valor de la segunda columna (asumiendo que las columnas están indexadas desde 0)
+            suma_segunda_columna += int(columnas[1])
+
+    return suma_segunda_columna
+
+
 
 
 def pregunta_02():
@@ -39,7 +50,24 @@ def pregunta_02():
     ]
 
     """
-    return
+    contador_letras = {}
+    with open('data.csv', 'r') as archivo:
+        # Iterar sobre cada línea en el archivo
+        for linea in archivo:
+            # Dividir la línea en columnas utilizando la tabulación como separador
+            columnas = linea.strip().split('\t')
+            
+            # Obtener la primera letra de la primera columna (asumiendo que las columnas están indexadas desde 0)
+            primera_letra = columnas[0][0]
+
+            # Actualizar el contador de la letra
+            contador_letras[primera_letra] = contador_letras.get(primera_letra, 0) + 1
+
+    # Crear la lista de tuplas ordenadas alfabéticamente
+    resultado = sorted(contador_letras.items())
+
+    return resultado
+
 
 
 def pregunta_03():
@@ -57,7 +85,27 @@ def pregunta_03():
     ]
 
     """
-    return
+    suma_por_letra = {}
+    with open('data.csv', 'r') as archivo:
+        # Iterar sobre cada línea en el archivo
+        for linea in archivo:
+            # Dividir la línea en columnas utilizando la tabulación como separador
+            columnas = linea.strip().split('\t')
+            
+            # Obtener la primera letra de la primera columna (asumiendo que las columnas están indexadas desde 0)
+            primera_letra = columnas[0][0]
+
+            # Obtener el valor de la segunda columna y sumarlo al total de la letra
+            valor_segunda_columna = int(columnas[1])
+            suma_por_letra[primera_letra] = suma_por_letra.get(primera_letra, 0) + valor_segunda_columna
+
+    # Crear la lista de tuplas ordenadas alfabéticamente
+    resultado = sorted(suma_por_letra.items())
+
+    return resultado
+
+
+
 
 
 def pregunta_04():
@@ -82,7 +130,38 @@ def pregunta_04():
     ]
 
     """
-    return
+    registros_por_mes = {}
+    with open('data.csv', 'r') as archivo:
+        # Iterar sobre cada línea en el archivo
+        for linea in archivo:
+            # Dividir la línea en columnas utilizando la tabulación como separador
+            columnas = linea.strip().split('\t')
+            
+            # Obtener el mes de la tercera columna (asumiendo que las columnas están indexadas desde 0)
+            mes = columnas[2][5:7]
+
+            # Incrementar el contador del mes
+            if mes in registros_por_mes:
+                registros_por_mes[mes] += 1
+            else:
+                registros_por_mes[mes] = 1
+
+    # Crear la lista de tuplas ordenadas alfabéticamente por mes
+    resultado = sorted(registros_por_mes.items())
+
+    return resultado
+
+
+resultado_pregunta_01 = pregunta_01()
+print(resultado_pregunta_01)
+resultado_pregunta_02 = pregunta_02()
+print(resultado_pregunta_02)
+resultado_pregunta_03 = pregunta_03()
+print(resultado_pregunta_03)
+resultado_pregunta_04 = pregunta_04()
+print(resultado_pregunta_04)
+
+
 
 
 def pregunta_05():
@@ -100,7 +179,28 @@ def pregunta_05():
     ]
 
     """
-    return
+    valores_por_letra = {}
+    with open('data.csv', 'r') as archivo:
+        # Iterar sobre cada línea en el archivo
+        for linea in archivo:
+            # Dividir la línea en columnas utilizando la tabulación como separador
+            columnas = linea.strip().split('\t')
+            
+            # Obtener la letra de la primera columna y el valor de la segunda columna
+            letra = columnas[0][0]
+            valor = int(columnas[1])
+
+            # Actualizar la lista de valores para cada letra
+            if letra in valores_por_letra:
+                valores_por_letra[letra].append(valor)
+            else:
+                valores_por_letra[letra] = [valor]
+
+    # Crear la lista de tuplas con el valor máximo y mínimo por letra y ordenar alfabéticamente
+    resultado = sorted((letra, max(valores), min(valores)) for letra, valores in valores_por_letra.items())
+
+    return resultado
+
 
 
 def pregunta_06():
@@ -125,7 +225,35 @@ def pregunta_06():
     ]
 
     """
-    return
+    valores_por_clave = {}
+    with open('data.csv', 'r') as archivo:
+        # Iterar sobre cada línea en el archivo
+        for linea in archivo:
+            # Dividir la línea en columnas utilizando la tabulación como separador
+            columnas = linea.strip().split('\t')
+            
+            # Obtener la cadena de tres letras de la quinta columna (asumiendo que las columnas están indexadas desde 0)
+            clave_valor_str = columnas[4].split('\t')[-1]
+
+            # Obtener los valores asociados a la clave
+            pares_clave_valor = [par.split(':') for par in clave_valor_str.split(',')]
+
+            for par in pares_clave_valor:
+                clave = par[0]
+                valor_asociado = int(par[1])
+                
+                # Actualizar los valores mínimo y máximo asociados a la clave
+                if clave in valores_por_clave:
+                    valores_por_clave[clave] = (min(valores_por_clave[clave][0], valor_asociado), max(valores_por_clave[clave][1], valor_asociado))
+                else:
+                    valores_por_clave[clave] = (valor_asociado, valor_asociado)
+
+    # Crear la lista de tuplas ordenadas alfabéticamente por clave
+    resultado = sorted((clave, min_max[0], min_max[1]) for clave, min_max in valores_por_clave.items())
+
+    return resultado
+
+
 
 
 def pregunta_07():
@@ -149,7 +277,29 @@ def pregunta_07():
     ]
 
     """
-    return
+    valores_letras_asociadas = {}
+    with open('data.csv', 'r') as archivo:
+        # Iterar sobre cada línea en el archivo
+        for linea in archivo:
+            # Dividir la línea en columnas utilizando la tabulación como separador
+            columnas = linea.strip().split('\t')
+            
+            # Obtener el valor de la columna 2 y la letra de la columna 1
+            valor_columna_2 = int(columnas[1])
+            letra_columna_1 = columnas[0][0]
+
+            # Actualizar la lista de letras asociadas al valor de la columna 2
+            if valor_columna_2 in valores_letras_asociadas:
+                valores_letras_asociadas[valor_columna_2].append(letra_columna_1)
+            else:
+                valores_letras_asociadas[valor_columna_2] = [letra_columna_1]
+
+    # Crear la lista de tuplas y ordenarla
+    resultado = sorted([(valor, letras) for valor, letras in valores_letras_asociadas.items()])
+
+    return resultado
+
+
 
 
 def pregunta_08():
@@ -172,9 +322,32 @@ def pregunta_08():
         (8, ["A", "B", "D", "E"]),
         (9, ["A", "B", "C", "E"]),
     ]
-
+    
     """
-    return
+    valores_letras_asociadas = {}
+    with open('data.csv', 'r') as archivo:
+        # Iterar sobre cada línea en el archivo
+        for linea in archivo:
+            # Dividir la línea en columnas utilizando la tabulación como separador
+            columnas = linea.strip().split('\t')
+            
+            # Obtener el valor de la columna 2 y la letra de la columna 1
+            valor_columna_2 = int(columnas[1])
+            letra_columna_1 = columnas[0][0]
+
+            # Actualizar la lista de letras asociadas al valor de la columna 2
+            if valor_columna_2 in valores_letras_asociadas:
+                valores_letras_asociadas[valor_columna_2].add(letra_columna_1)
+            else:
+                valores_letras_asociadas[valor_columna_2] = {letra_columna_1}
+
+    # Crear la lista de tuplas y ordenarla
+    resultado = sorted([(valor, sorted(list(letras))) for valor, letras in valores_letras_asociadas.items()])
+
+    return resultado
+
+
+
 
 
 def pregunta_09():
@@ -197,7 +370,30 @@ def pregunta_09():
     }
 
     """
-    return
+    conteo_claves = {}
+    with open('data.csv', 'r') as archivo:
+        # Iterar sobre cada línea en el archivo
+        for linea in archivo:
+            # Dividir la línea en columnas utilizando la tabulación como separador
+            columnas = linea.strip().split('\t')
+            
+            # Obtener la cadena de la quinta columna (asumiendo que las columnas están indexadas desde 0)
+            cadena_columna_5 = columnas[4]
+
+            # Dividir la cadena en pares clave-valor y contar la aparición de cada clave
+            pares_clave_valor = cadena_columna_5.split(',')
+            for par in pares_clave_valor:
+                clave = par.split(':')[0]
+                if clave in conteo_claves:
+                    conteo_claves[clave] += 1
+                else:
+                    conteo_claves[clave] = 1
+
+    # Ordenar el diccionario por las claves
+    resultado_ordenado = dict(sorted(conteo_claves.items()))
+
+    return resultado_ordenado
+
 
 
 def pregunta_10():
@@ -218,7 +414,24 @@ def pregunta_10():
 
 
     """
-    return
+    resultados = []
+    with open('data.csv', 'r') as archivo:
+        # Iterar sobre cada línea en el archivo
+        for linea in archivo:
+            # Dividir la línea en columnas utilizando la tabulación como separador
+            columnas = linea.strip().split('\t')
+
+            # Obtener la letra de la columna 1
+            letra_columna_1 = columnas[0][0]
+
+            # Obtener la cantidad de elementos de las columnas 4 y 5
+            cantidad_columna_4 = len(columnas[3].split(','))
+            cantidad_columna_5 = len(columnas[4].split(','))
+
+            # Agregar la tupla a la lista de resultados
+            resultados.append((letra_columna_1, cantidad_columna_4, cantidad_columna_5))
+
+    return resultados
 
 
 def pregunta_11():
@@ -239,7 +452,30 @@ def pregunta_11():
 
 
     """
-    return
+    suma_letras = {}
+    with open('data.csv', 'r') as archivo:
+        # Iterar sobre cada línea en el archivo
+        for linea in archivo:
+            # Dividir la línea en columnas utilizando la tabulación como separador
+            columnas = linea.strip().split('\t')
+
+            # Obtener la letra de la columna 4
+            letras_columna_4 = columnas[3].split(',')
+
+            # Obtener la suma de la columna 2 para cada letra de la columna 4
+            for letra in letras_columna_4:
+                if letra in suma_letras:
+                    suma_letras[letra] += int(columnas[1])
+                else:
+                    suma_letras[letra] = int(columnas[1])
+
+    # Ordenar el diccionario por las claves alfabéticamente
+    resultado_ordenado = dict(sorted(suma_letras.items()))
+
+    return resultado_ordenado
+
+
+
 
 
 def pregunta_12():
@@ -257,4 +493,53 @@ def pregunta_12():
     }
 
     """
-    return
+    suma_columna_5 = {}
+    with open('data.csv', 'r') as archivo:
+        # Iterar sobre cada línea en el archivo
+        for linea in archivo:
+            # Dividir la línea en columnas utilizando la tabulación como separador
+            columnas = linea.strip().split('\t')
+
+            # Obtener la letra de la columna 1
+            letra_columna_1 = columnas[0][0]
+
+            # Obtener la suma de los valores de la columna 5 para cada letra de la columna 1
+            valor_columna_5 = columnas[4].split(',')
+            for par in valor_columna_5:
+                _, valor = par.split(':')
+                if letra_columna_1 in suma_columna_5:
+                    suma_columna_5[letra_columna_1] += int(valor)
+                else:
+                    suma_columna_5[letra_columna_1] = int(valor)
+
+    # Ordenar el diccionario por las claves alfabéticamente
+    resultado_ordenado = dict(sorted(suma_columna_5.items()))
+
+    return resultado_ordenado
+
+
+
+resultado_pregunta_01 = pregunta_01()
+print(resultado_pregunta_01)
+resultado_pregunta_02 = pregunta_02()
+print(resultado_pregunta_02)
+resultado_pregunta_03 = pregunta_03()
+print(resultado_pregunta_03)
+resultado_pregunta_04 = pregunta_04()
+print(resultado_pregunta_04)
+resultado_pregunta_05 = pregunta_05()
+print(resultado_pregunta_05)
+resultado_pregunta_06 = pregunta_06()
+print(resultado_pregunta_06)
+resultado_pregunta_07 = pregunta_07()
+print(resultado_pregunta_07)
+resultado_pregunta_08 = pregunta_08()
+print(resultado_pregunta_08)
+resultado_pregunta_09 = pregunta_09()
+print(resultado_pregunta_09)
+resultado_pregunta_10 = pregunta_10()
+print(resultado_pregunta_10)
+resultado_pregunta_11 = pregunta_11()
+print(resultado_pregunta_11)
+resultado_pregunta_12 = pregunta_12()
+print(resultado_pregunta_12)
